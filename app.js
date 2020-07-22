@@ -77,10 +77,6 @@
 
         searchCntrl.removeMenuItem = function(itemIndex) {
             searchCntrl.found.splice(itemIndex, 1);
-
-            if (!searchCntrl.found.length) {
-                searchCntrl.message =  'Nothing found!';
-            }
         }
     }
 })();
