@@ -17,7 +17,7 @@
                 method: "GET",
                 url: (ApiBasePath +"/menu_items.json")
             }).then (function success(response){
-    
+                
                     for (var i = 0; i < response.data['menu_items'].length; i++) {
                         if (( response.data['menu_items'][i]['description'].toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) ||
                             ( response.data['menu_items'][i]['name'].toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1) ||
@@ -38,13 +38,21 @@
         return {
             templateUrl: 'foundItem.html',
             restrict: 'E',
-            scope: {
-                foundItems: '=myList' 
-            }
-        } 
+            
+			scope: {
+				foundItems: '<',
+                onRemove: '&',
+                message: '<'
+			  },
+			controller: FoundItemsDirectiveController,
+			controllerAs: 'list',
+			bindToController: true
+        };
     }
 
-
+  function FoundItemsDirectiveController() {
+    var list = this;
+  }
     NarrowItDownController.$inject =['MenuSearchService'];
     function NarrowItDownController (MenuSearchService) {
 
@@ -54,9 +62,7 @@
         searchCntrl.found = [];
 
         searchCntrl.findMenuItems = function () {
-            
             if (searchCntrl.searchTerm.trim().length > 0){
-                
                 MenuSearchService.getMatchedMenuItems(searchCntrl.searchTerm)
                 .then(function (foundItems) {
                     if (foundItems.length){
@@ -75,8 +81,8 @@
             }
         }
 
-        searchCntrl.removeMenuItem = function(itemIndex) {
-            searchCntrl.found.splice(itemIndex, 1);
+        searchCntrl.removeMenuItem = function(index) {
+            searchCntrl.found.splice(index, 1);
         }
     }
 })();

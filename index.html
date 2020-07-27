@@ -22,7 +22,8 @@
     </div>
 
     <!-- found-items should be implemented as a component (custom directive template) -->
-    <found-items my-list="searchCntrl" ></found-items>
+    <found-items found-items="searchCntrl.found" on-remove="searchCntrl.removeMenuItem(index)" message="searchCntrl.message" ></found-items>
+    
   </div>
 
 </body>
